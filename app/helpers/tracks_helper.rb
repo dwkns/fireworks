@@ -7,8 +7,8 @@ module TracksHelper
 	def policy_document
 <<-policy
 {"expiration": "2020-01-01T00:00:00Z",
-"conditions": [ 
-  {"bucket": "fireworktracks"}, 
+"conditions": [
+  {"bucket": "wireforks"},
   ["starts-with", "$key", ""],
   {"acl": "private"},
   {"success_action_redirect": "http://example.com/upload_callback"},
@@ -26,8 +26,8 @@ policy
 	def signature
 		Base64.encode64(
 	    OpenSSL::HMAC.digest(
-	        OpenSSL::Digest::Digest.new('sha1'), 
-	        ENV['AWS_SECRET_ACCESS_KEY'], policy)
+	        OpenSSL::Digest::Digest.new('sha1'),
+	        ENV['AWS_SECRET_ACCESS_KEY_FIREWORKS'], policy)
 	    ).gsub("\n","")
 	end
 end

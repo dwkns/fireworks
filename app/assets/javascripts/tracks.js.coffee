@@ -15,7 +15,7 @@ $ ->
       $('#progress_bar_upload').progressbar("option", "value", percentComplete)
       if percentComplete > 99.9
         $('#progress_bar_upload').css('visibility', 'hidden')
-        
+
   $( ".controls" ).on "click", "#change_song", (e) ->
     change_song_button = $( "#change_song" )
     change_song_button.remove()
@@ -43,7 +43,7 @@ $ ->
       unique_file_name = file_name_with_date + file_extension
       fd = new FormData()
       fd.append('key', 'tracks/' + unique_file_name);
-      fd.append('AWSAccessKeyId', 'AKIAJD5FZFVKYPWHKUCA');
+      fd.append('AWSAccessKeyId', 'AKIAJTQCEXAE2SC25UUA');
       fd.append('acl', 'private');
       fd.append('success_action_redirect', "http://example.com/upload_callback")
       fd.append('policy', window.policy)
@@ -54,14 +54,15 @@ $ ->
       xhr = new XMLHttpRequest()
       $("#progress_bar_upload").progressbar()
       xhr.upload.onprogress=updateProgress
-      xhr.open("POST", "https://fireworktracks.s3.amazonaws.com/", true)
+      xhr.open("POST", "https://wireforks.s3.amazonaws.com/", true)
 
       # creates a listener for when it is finished uploading then when it's uploaded does a post request
       xhr.upload.addEventListener 'load', (e) ->
         $.ajax
           type: "POST",
+          dataType: "jsonp",
           url: "/tracks",
-          data: { track_url: "https://s3.amazonaws.com/fireworktracks/tracks/" + unique_file_name, show_id: getCurrentShowID() },
+          data: { track_url: "https://s3.amazonaws.com/wireforks/tracks/" + unique_file_name, show_id: getCurrentShowID() },
           success: (status) ->
             console.log("Successs!")
 
